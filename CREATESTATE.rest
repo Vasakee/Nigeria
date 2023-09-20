@@ -1,0 +1,27 @@
+POST  http://localhost:3001/api/Naija/
+Content-Type: application/json
+
+{
+    "name": "FCT",
+    "capital": "Abuja",
+    "localGovernments" : [
+        {
+    "name": "Abaji"
+  },
+  {
+    "name": "Bwari"
+  },
+  {
+    "name": "Gwagwalada"
+  },
+  {
+    "name": "Kuje"
+  },
+  {
+    "name": "Kwali"
+  },
+  {
+    "name": "Abuja Municipal Area Council LGA"
+  }
+    ]
+}

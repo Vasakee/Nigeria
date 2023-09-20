@@ -1,53 +1,38 @@
 const Naija = require('./NaijaModel')
 const expressasynchandler = require('express-async-handler')
+const State = require('./NaijaModel')
 
 
 const CreateState = expressasynchandler(async (req, res) => {
-    const { state, capital, localGovernment } = req.body
-
-    if (!state || !capital || !localGovernment) {
-        req.status(400)
-        throw new Error('Please fill all fields')
-    }
-
-    const newState = await Naija.create({
-        state, capital, localGovernment
-    })
-
-    if (newState) {
-        res.status(201).json({
-            _id: newState._id,
-            state: newState.state,
-            capital: newState.capital,
-            localGovernment: newState.localGovernment
-        })
-    } else {
-        res.status(400)
-        throw new Error('failed to create state')
+    try {
+        const { name, capital, localGovernments } = req.body
+        const state = new State({ name, capital, localGovernments })
+        await state.save()
+        res.status(201).json(state)
+    } catch (err) {
+        res.status(500).json({ error: 'Internal server error' });
     }
 })
-
+// Get all the states in the country and their local governments
 const GetStates = expressasynchandler(async (req, res) => {
     try {
-        const state = await Naija.find({})
-        res.status(200).send(state)
+        const states = await State.find();
+        res.status(200).json(states);
     } catch (error) {
         res.status(400)
         throw new Error(error.message)
     }
 })
-
+//Get a single state and its local governments
 const GetState = expressasynchandler(async (req, res) => {
     try {
-        const stateName = (req.params.stateName)
-        const location = await Naija.findOne({ state: stateName })
-        if (!location) {
-            res.status(404).json({ error: 'State not Found' })
+        const stateName = req.params.stateName;
+        const state = await State.findOne({ name: stateName });
+        if (!state) {
+            res.status(404).json({ error: 'State not found' });
+        } else {
+            res.status(200).json(state);
         }
-        else {
-            res.status(200).send(location)
-        }
-
     } catch (error) {
         res.status(400)
         throw new Error(error.message)

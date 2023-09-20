@@ -1,12 +1,15 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const Model = mongoose.Model
 
-const stateSchema = new Schema({
-    state: String,
+
+const State = mongoose.model('State', {
+    name: String,
     capital: String,
-    localGovernment: [String]
-})
-
-const State = mongoose.model('State', stateSchema)
+    localGovernments: [
+        {
+            name: String,
+        },
+    ],
+});
 
 module.exports = State
