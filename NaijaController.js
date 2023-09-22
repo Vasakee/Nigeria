@@ -1,4 +1,3 @@
-const Naija = require('./NaijaModel')
 const expressasynchandler = require('express-async-handler')
 const State = require('./NaijaModel')
 

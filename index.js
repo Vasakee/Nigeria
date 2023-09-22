@@ -1,8 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const { CreateState, GetStates, GetState } = require('./NaijaController')
 
-const NaijaRoutes = require('./NaijaRoute')
+//const NaijaRoutes = require('./NaijaRoute')
 
 const app = express()
 dotenv.config()
@@ -18,6 +19,7 @@ const PORT = process.env.PORT
 
 app.use(express.json())
 
-app.listen(PORT, console.log(`server is running on Port ${PORT}`))
+app.get('/api/Naija', (GetStates))
+app.get('/api/Naija/:stateName', (GetState))
 
-app.use('/api/Naija', NaijaRoutes)
+app.listen(PORT, console.log(`server is running on Port ${PORT}`))
