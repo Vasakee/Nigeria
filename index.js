@@ -19,7 +19,7 @@ const PORT = process.env.PORT
 
 app.use(express.json())
 
-app.get('/api/Naija', (GetStates))
-app.get('/api/Naija/:stateName', (GetState))
+app.get('/', (GetStates))
+app.get('/:stateName', (GetState))
 
 app.listen(PORT, console.log(`server is running on Port ${PORT}`))
